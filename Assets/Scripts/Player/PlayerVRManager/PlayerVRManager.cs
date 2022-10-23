@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerVRManager : MonoBehaviour
 {
-    [SerializeField] private GameObject VRParent;
-    [SerializeField] private GameObject DesktopParent;
-
+    [Header("Desktop")]
+    [SerializeField] private GameObject _desktopParent;
+    
+    [Header("VR")]
+    [SerializeField] private GameObject _vrParent;
+    [SerializeField] private CharacterControllerDriver _vrDriver;
+    
     private bool _vrModeEnabled = false;
 
     private void Awake()
@@ -25,8 +30,9 @@ public class PlayerVRManager : MonoBehaviour
     private void SetMode()
     {
         _vrModeEnabled = VRManager.Instance.IsVRActive;
-        VRParent.SetActive(_vrModeEnabled);
-        DesktopParent.SetActive(!_vrModeEnabled);
+        _vrParent.SetActive(_vrModeEnabled);
+        _vrDriver.enabled = _vrModeEnabled;
+        _desktopParent.SetActive(!_vrModeEnabled);
     }
 
 }
